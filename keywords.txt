@@ -1,0 +1,115 @@
+# Syntax coloring for Arduino IDE (TAB-separated)
+
+ControlHub	KEYWORD1
+robot	KEYWORD1
+motor	KEYWORD1
+servo	KEYWORD1
+Sys	KEYWORD1
+
+# Entry point
+create	KEYWORD2
+
+# Device tags
+ULTRASONIC	LITERAL1
+TOF	LITERAL1
+SHARP_IR	LITERAL1
+CONTACT	LITERAL1
+POT	LITERAL1
+NEOPIXEL	LITERAL1
+BUZZER	LITERAL1
+DIGITAL_OUT	LITERAL1
+
+# Handle types
+UltrasonicHandle	KEYWORD3
+ToFHandle	KEYWORD3
+SharpIRHandle	KEYWORD3
+ContactHandle	KEYWORD3
+PotHandle	KEYWORD3
+DigitalOutHandle	KEYWORD3
+NeoPixelHandle	KEYWORD3
+BuzzerHandle	KEYWORD3
+DistanceHandle	KEYWORD3
+
+# Robot Level 1
+begin	KEYWORD2
+go_forward	KEYWORD2
+go_backward	KEYWORD2
+turn_left	KEYWORD2
+turn_right	KEYWORD2
+stop	KEYWORD2
+wait	KEYWORD2
+grasp	KEYWORD2
+release	KEYWORD2
+is_obstacle_detected	KEYWORD2
+is_obstacle_touched	KEYWORD2
+set_primary_distance	KEYWORD2
+set_primary_contact	KEYWORD2
+
+# Handle methods (Level 2)
+distance_cm	KEYWORD2
+distance_mm	KEYWORD2
+pressed	KEYWORD2
+percent	KEYWORD2
+scaled	KEYWORD2
+volts	KEYWORD2
+raw	KEYWORD2
+on	KEYWORD2
+off	KEYWORD2
+toggle	KEYWORD2
+write	KEYWORD2
+read	KEYWORD2
+value	KEYWORD2
+set_color	KEYWORD2
+fill	KEYWORD2
+clear	KEYWORD2
+show	KEYWORD2
+count	KEYWORD2
+set_brightness	KEYWORD2
+tone	KEYWORD2
+no_tone	KEYWORD2
+
+# Motor Level 2/3
+rotate	KEYWORD2
+position	KEYWORD2
+set_P	KEYWORD2
+set_I	KEYWORD2
+set_D	KEYWORD2
+get_P	KEYWORD2
+get_I	KEYWORD2
+get_D	KEYWORD2
+set_controlmode	KEYWORD2
+get_controlmode	KEYWORD2
+set_speed	KEYWORD2
+get_speed	KEYWORD2
+set_position	KEYWORD2
+get_position	KEYWORD2
+drive_raw	KEYWORD2
+reset_encoder	KEYWORD2
+has_encoder	KEYWORD2
+
+# System
+wait_sec	KEYWORD2
+wait_millisec	KEYWORD2
+uptime_sec	KEYWORD2
+uptime_ms	KEYWORD2
+
+MOTOR_1	LITERAL1
+MOTOR_2	LITERAL1
+MOTOR_3	LITERAL1
+MOTOR_4	LITERAL1
+MOTOR_5	LITERAL1
+MOTOR_6	LITERAL1
+SERVO_1	LITERAL1
+SERVO_2	LITERAL1
+SERVO_3	LITERAL1
+SERVO_4	LITERAL1
+PORT_MF4P_1	LITERAL1
+PORT_MF4P_2	LITERAL1
+PORT_MF3P_1	LITERAL1
+PORT_MF3P_2	LITERAL1
+PORT_MF3P_3	LITERAL1
+MODE_OPEN_LOOP	LITERAL1
+MODE_SPEED	LITERAL1
+MODE_POSITION	LITERAL1
+STOP_COAST	LITERAL1
+STOP_BRAKE	LITERAL1
