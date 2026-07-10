@@ -1,0 +1,71 @@
+#######################################
+# Syntax Coloring Map For ControlHub
+#######################################
+
+#######################################
+# Datatypes / Classes (KEYWORD1)
+#######################################
+
+ControlHub	KEYWORD1
+Robot	KEYWORD1
+System	KEYWORD1
+Motor	KEYWORD1
+Servo	KEYWORD1
+Ultrasonic	KEYWORD1
+Contact	KEYWORD1
+Module	KEYWORD1
+Frame	KEYWORD1
+CommHub	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+# ControlHub main
+begin	KEYWORD2
+beginUSB	KEYWORD2
+beginBLE	KEYWORD2
+beginRS485	KEYWORD2
+update	KEYWORD2
+sendFrame	KEYWORD2
+sendRs485	KEYWORD2
+onFrame	KEYWORD2
+
+# Level 1 - Robot API
+go_forward	KEYWORD2
+go_backward	KEYWORD2
+turn_left	KEYWORD2
+turn_right	KEYWORD2
+grasp	KEYWORD2
+release	KEYWORD2
+is_obstacle_detected	KEYWORD2
+is_obstacle_touched	KEYWORD2
+setDriveTrain	KEYWORD2
+setGripper	KEYWORD2
+setDistance	KEYWORD2
+setContact	KEYWORD2
+
+# Level 2 - Action API
+rotate	KEYWORD2
+stop	KEYWORD2
+get	KEYWORD2
+wait	KEYWORD2
+wait_sec	KEYWORD2
+wait_millisec	KEYWORD2
+status	KEYWORD2
+write	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MOD_POWER	LITERAL1
+MOD_IMU	LITERAL1
+MOD_TOF	LITERAL1
+MOD_BUMPER	LITERAL1
+MOD_MOTOR	LITERAL1
+MOD_SERVO	LITERAL1
+MOD_ULTRASONIC	LITERAL1
+MODE_DUTY	LITERAL1
+MODE_SPEED	LITERAL1
+MODE_POSITION	LITERAL1

@@ -1,0 +1,170 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ControlHub BLE Tester</title>
+<meta name="theme-color" content="#0f1420" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="css/styles.css" />
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot" id="statusDot"></span>
+    <div>
+      <h1>ControlHub <span>BLE Tester</span></h1>
+      <p id="statusText" class="muted">Chưa kết nối</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="installBtn" class="btn ghost" hidden>Cài đặt</button>
+    <button id="connectBtn" class="btn primary">Kết nối</button>
+    <button id="disconnectBtn" class="btn" hidden>Ngắt</button>
+  </div>
+</header>
+
+<main class="grid">
+  <!-- Motor -->
+  <section class="card" id="motorCard">
+    <h2>Motor</h2>
+    <div class="row">
+      <label>Motor
+        <select id="motorId">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+        </select>
+      </label>
+      <label>Mode
+        <select id="motorMode">
+          <option value="0">DUTY</option>
+          <option value="1">SPEED</option>
+          <option value="2">POSITION</option>
+        </select>
+      </label>
+    </div>
+    <label class="slider-label">
+      Duty: <output id="motorDutyOut">0</output>%
+      <input type="range" id="motorDuty" min="-100" max="100" step="1" value="0" />
+    </label>
+    <div class="row">
+      <button class="btn primary" id="motorSend">Gửi</button>
+      <button class="btn" id="motorStop">Dừng (0%)</button>
+      <label class="check"><input type="checkbox" id="motorLive" /> Live</label>
+    </div>
+  </section>
+
+  <!-- Servo -->
+  <section class="card" id="servoCard">
+    <h2>Servo</h2>
+    <div class="row">
+      <label>Servo
+        <select id="servoId">
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+        </select>
+      </label>
+    </div>
+    <label class="slider-label">
+      Góc: <output id="servoAngleOut">90</output>°
+      <input type="range" id="servoAngle" min="0" max="180" step="1" value="90" />
+    </label>
+    <div class="row">
+      <button class="btn primary" id="servoSend">Gửi</button>
+      <label class="check"><input type="checkbox" id="servoLive" checked /> Live</label>
+    </div>
+  </section>
+
+  <!-- LED -->
+  <section class="card" id="ledCard">
+    <h2>LED</h2>
+    <div class="row">
+      <label>LED port
+        <select id="ledId">
+          <option value="1">MF4P_1 (id 1)</option>
+          <option value="2">MF4P_2 (id 2)</option>
+          <option value="3">MF3P_1 (id 3)</option>
+          <option value="4">MF3P_2 (id 4)</option>
+          <option value="5">MF3P_3 (id 5)</option>
+        </select>
+      </label>
+      <label>Index
+        <input type="number" id="ledIndex" min="0" max="255" value="255" />
+      </label>
+      <label class="check"><input type="checkbox" id="ledAll" checked /> Tất cả (0xFF)</label>
+    </div>
+    <div class="row">
+      <label>Màu <input type="color" id="ledColor" value="#00ff88" /></label>
+      <label class="slider-label grow">
+        Sáng: <output id="ledBrightOut">128</output>
+        <input type="range" id="ledBright" min="0" max="255" value="128" />
+      </label>
+    </div>
+    <div class="row">
+      <button class="btn primary" id="ledSend">Set</button>
+      <button class="btn" id="ledOff">Tắt</button>
+    </div>
+  </section>
+
+  <!-- Gamepad -->
+  <section class="card wide" id="gamepadCard">
+    <h2>Gamepad
+      <label class="check right"><input type="checkbox" id="gpStream" /> Stream (150ms)</label>
+    </h2>
+    <div class="gp-wrap">
+      <div class="gp-block">
+        <div class="dpad">
+          <button class="btn gp" data-btn="UP">▲</button>
+          <button class="btn gp" data-btn="LEFT">◀</button>
+          <button class="btn gp" data-btn="RIGHT">▶</button>
+          <button class="btn gp" data-btn="DOWN">▼</button>
+        </div>
+      </div>
+      <div class="gp-block sticks">
+        <div class="joystick" data-x="lx" data-y="ly">
+          <div class="knob"></div>
+          <span class="jlabel">L · <output id="lxOut">128</output>,<output id="lyOut">128</output></span>
+        </div>
+        <div class="joystick" data-x="rx" data-y="ry">
+          <div class="knob"></div>
+          <span class="jlabel">R · <output id="rxOut">128</output>,<output id="ryOut">128</output></span>
+        </div>
+      </div>
+      <div class="gp-block face">
+        <div class="face-grid">
+          <button class="btn gp" data-btn="Y">Y</button>
+          <button class="btn gp" data-btn="X">X</button>
+          <button class="btn gp" data-btn="B">B</button>
+          <button class="btn gp" data-btn="A">A</button>
+        </div>
+        <div class="shoulder">
+          <button class="btn gp" data-btn="L1">L1</button>
+          <button class="btn gp" data-btn="R1">R1</button>
+          <button class="btn gp" data-btn="L2">L2</button>
+          <button class="btn gp" data-btn="R2">R2</button>
+          <button class="btn gp" data-btn="SELECT">SEL</button>
+          <button class="btn gp" data-btn="START">START</button>
+        </div>
+      </div>
+    </div>
+    <p class="muted small">Giữ nút = bấm; nhả = thả. Bật Stream để gửi liên tục (firmware timeout 600ms).</p>
+    <button class="btn" id="gpSendOnce">Gửi 1 frame</button>
+  </section>
+
+  <!-- Console -->
+  <section class="card wide" id="consoleCard">
+    <h2>Console
+      <label class="check right"><input type="checkbox" id="autoscroll" checked /> Auto-scroll</label>
+    </h2>
+    <div class="row">
+      <input type="text" id="rawHex" class="grow mono" placeholder="Hex thô, vd: 55 05 01 01 00 03 13 88 00" />
+      <button class="btn" id="rawAppendCrc">+CRC & gửi</button>
+      <button class="btn" id="rawSend">Gửi nguyên</button>
+    </div>
+    <div class="log" id="log"></div>
+    <div class="row">
+      <button class="btn ghost" id="clearLog">Xoá log</button>
+    </div>
+  </section>
+</main>
+
+<script src="js/protocol.js"></script>
+<script src="js/ble.js"></script>
+<script src="js/app.js"></script>
