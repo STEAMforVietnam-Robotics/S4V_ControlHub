@@ -3,8 +3,8 @@
 
 using namespace ControlHubProtocol;
 
-Led::Led(Port port, uint16_t count)
-    : _port(port), _count(count),
+Led::Led(Port port, uint16_t count, uint8_t id)
+    : _port(port), _count(count), _id(id),
       _px(count, 0, NEO_GRB + NEO_KHZ800)
 {
     switch (_port) {
@@ -15,7 +15,6 @@ Led::Led(Port port, uint16_t count)
         case PORT_MF3P_3: _pin = CH_MF3P_3_SIG;  break;
         default:          _pin = -1;             break;
     }
-    _id = (uint8_t)port + 1;    // wire ID: 1-based port index
 }
 
 void Led::begin()

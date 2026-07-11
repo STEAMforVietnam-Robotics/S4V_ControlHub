@@ -196,7 +196,7 @@ Toàn bộ pin mapping nằm trong `ControlHubConfig.h`, mặc định khớp v�
 | MF4P_1 | GPIO 16, 17 |
 | MF4P_2 | GPIO 18, 8 |
 | MF3P_1..3 | GPIO 3, 9, 10 |
-| RS485 | Serial1, DE=GPIO2, RE=GPIO42 |
+| RS485 | Serial0 (UART0, TX=GPIO43/RX=GPIO44), DE=GPIO2, RE=GPIO42 |
 
 Nếu schematic thay đổi, chỉ cần chỉnh `ControlHubConfig.h` — phần còn lại của thư viện không cần đụng.
 

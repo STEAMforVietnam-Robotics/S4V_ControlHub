@@ -32,8 +32,9 @@ namespace ControlHubProtocol { class CommHub; }
 class Led : public Module {
 public:
     /** @param port data line (MF3P single SIG, or MF4P SIG1).
-     *  @param count number of WS2812 LEDs in the strip. */
-    explicit Led(Port port = PORT_MF3P_1, uint16_t count = 8);
+     *  @param count number of WS2812 LEDs in the strip.
+     *  @param id led ID. */
+    explicit Led(Port port = PORT_MF3P_1, uint16_t count = 8, uint8_t id = 0);
 
     void begin() override;
 

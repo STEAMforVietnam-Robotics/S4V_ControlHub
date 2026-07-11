@@ -23,7 +23,7 @@ namespace ControlHubProtocol { class CommHub; }
 class Ultrasonic : public Module {
 public:
     /** @param port Multi-function 4P port (PORT_MF4P_1 or PORT_MF4P_2). */
-    explicit Ultrasonic(Port port);
+    explicit Ultrasonic(Port port, uint8_t id = 0);
 
     void begin() override;
 

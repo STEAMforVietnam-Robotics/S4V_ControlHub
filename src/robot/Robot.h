@@ -34,10 +34,6 @@ public:
     /** Attach two already-constructed Motor objects (no ownership taken). */
     void setDriveTrain(Motor *left, Motor *right);
 
-    /** Optionally invert one side (mount the motor upside down? no worries). */
-    void invertLeft (bool inv) { _leftInv  = inv; }
-    void invertRight(bool inv) { _rightInv = inv; }
-
     /** Attach a gripper servo and its open/closed angles. */
     void setGripper(Servo *servo, uint8_t openAngle = 20, uint8_t closedAngle = 160);
 
@@ -70,8 +66,6 @@ private:
 
     Motor    *_leftM   = nullptr;
     Motor    *_rightM  = nullptr;
-    bool      _leftInv  = false;
-    bool      _rightInv = true;    // default: right motor mirror-mounted
 
     Servo    *_gripper       = nullptr;
     uint8_t   _openAng       = 20;

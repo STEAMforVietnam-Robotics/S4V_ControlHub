@@ -54,9 +54,11 @@
 #include "modules/Motor.h"
 #include "modules/Servo.h"
 #include "modules/Ultrasonic.h"
+#include "modules/SmartToF.h"
 #include "modules/Contact.h"
 #include "modules/Led.h"
 #include "modules/Gamepad.h"
+#include "modules/PhoneSensor.h"
 
 // High-level Robot / System APIs
 #include "robot/Robot.h"
@@ -76,6 +78,7 @@ using ControlHubProtocol::MOD_MOTOR;
 using ControlHubProtocol::MOD_SERVO;
 using ControlHubProtocol::MOD_LED;
 using ControlHubProtocol::MOD_GAMEPAD;
+using ControlHubProtocol::MOD_PHONE_SENSOR;
 using ControlHubProtocol::MODE_DUTY;
 using ControlHubProtocol::MODE_SPEED;
 using ControlHubProtocol::MODE_POSITION;

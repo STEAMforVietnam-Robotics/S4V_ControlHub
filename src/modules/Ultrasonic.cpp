@@ -3,10 +3,8 @@
 
 using namespace ControlHubProtocol;
 
-Ultrasonic::Ultrasonic(Port port) : _port(port)
+Ultrasonic::Ultrasonic(Port port, uint8_t id) : _port(port), _id(id )
 {
-    // Wire ID: 1-based index within the two MF4P ports.
-    _id = (uint8_t)(port - PORT_MF4P_1 + 1);
 }
 
 void Ultrasonic::begin()

@@ -3,8 +3,8 @@
 
 using namespace ControlHubProtocol;
 
-Contact::Contact(Port port, bool activeLow)
-    : _port(port), _activeLow(activeLow) {
+Contact::Contact(Port port, uint8_t id, bool activeLow)
+    : _port(port), _id(id), _activeLow(activeLow) {
     switch (_port) {
         case PORT_MF4P_1: _pin = CH_MF4P_1_SIG1; break;
         case PORT_MF4P_2: _pin = CH_MF4P_2_SIG1; break;
@@ -13,7 +13,6 @@ Contact::Contact(Port port, bool activeLow)
         case PORT_MF3P_3: _pin = CH_MF3P_3_SIG;  break;
         default:          _pin = -1;             break;
     }
-    _id = (uint8_t)port + 1;    // wire ID: 1-based port index
 }
 
 void Contact::begin()

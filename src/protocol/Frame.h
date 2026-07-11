@@ -28,7 +28,8 @@ enum ModuleType : uint8_t {
     MOD_ULTRASONIC = 0x07,   // Ultrasonic distance sensor
     MOD_SMART_MOTOR = 0x08,  // Smart Motor (with integrated encoder)
     MOD_LED         = 0x09,  // WS2812 / NeoPixel LED strip
-    MOD_GAMEPAD     = 0x0A    // BLE gamepad (buttons + joysticks)
+    MOD_GAMEPAD     = 0x0A,   // BLE gamepad (buttons + joysticks)
+    MOD_PHONE_SENSOR = 0x0B   // Smart Phone Sensor (Accel, Gyro, Mag, GPS)
 };
 
 // ---- Msg IDs -------------------------------------------------------------
@@ -41,6 +42,15 @@ enum MotorMsgId : uint8_t {
 
 // Sensors & Power all use 0x11 for their status frame
 constexpr uint8_t MSG_STATUS = 0x11;
+
+// Phone Sensor - dữ liệu đẩy từ app điện thoại qua BLE (push-only, không RTR)
+enum PhoneMsgId : uint8_t {
+    PHONE_MSG_ACCEL   = 0x01,   // 3x int16 big-endian, đơn vị mg (milli-g), scale 1000 = 1g
+    PHONE_MSG_GYRO    = 0x02,   // 3x int16 big-endian, đơn vị 0.1 deg/s
+    PHONE_MSG_MAG     = 0x03,   // 3x int16 big-endian, đơn vị 0.1 µT
+    PHONE_MSG_GPS     = 0x04,   // lat (int32) + lon (int32), độ * 1e7
+    PHONE_MSG_GPS_ALT = 0x05    // alt (int16), đơn vị decimet (0.1 m)
+};
 
 // ---- Motor control modes (byte[2] of a Control Frame) -------------------
 enum MotorMode : uint8_t {

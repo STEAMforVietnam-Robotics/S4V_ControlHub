@@ -22,7 +22,7 @@ public:
      * @param port      multi-function port the bumper is wired to.
      * @param activeLow true if the switch pulls the line LOW when pressed.
      */
-    explicit Contact(Port port, bool activeLow = true);
+    explicit Contact(Port port, uint8_t id = 0, bool activeLow = true);
 
     void begin() override;
 

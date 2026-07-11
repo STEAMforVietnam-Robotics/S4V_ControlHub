@@ -108,7 +108,14 @@
 #endif
 
 // ---------------------------------------------------------------------------
-//  RS485  (Smart Module bus - uses UART0 TXD0/RXD0 with DE/RE)
+//  Phone Sensor (BLE) - treat as disconnected if no frame within this window
+// ---------------------------------------------------------------------------
+#ifndef CH_PHONE_SENSOR_TIMEOUT_MS
+#define CH_PHONE_SENSOR_TIMEOUT_MS  600
+#endif
+
+// ---------------------------------------------------------------------------
+//  RS485  (Smart Module bus - uses UART0 (Serial0) TXD0/RXD0 with DE/RE)
 // ---------------------------------------------------------------------------
 #define CH_RS485_DE         2
 #define CH_RS485_RE         42
@@ -116,15 +123,23 @@
 #define CH_RS485_BAUD       115200
 #endif
 
-// Which HardwareSerial the RS485 driver uses. On ESP32-S3 UART0 shares
-// pins with USB CDC on some boards; you can move to Serial1 by defining
-// CH_RS485_SERIAL before including <ControlHub.h>.
+// Which HardwareSerial the RS485 driver uses. Defaults to Serial0 (UART0),
+// fixed at GPIO43 (TX0) / GPIO44 (RX0) on ESP32-S3. Serial0 is always a
+// separate object from the native USB CDC (CH_USB_SERIAL below), so the two
+// run concurrently with no pin conflict. Override by defining CH_RS485_SERIAL
+// before including <ControlHub.h> - avoid Serial1, whose ESP32-S3 default
+// pins (RX1=GPIO15/TX1=GPIO16) collide with CH_MF4P_1_SIG1.
 #ifndef CH_RS485_SERIAL
-#define CH_RS485_SERIAL     Serial1
+#define CH_RS485_SERIAL     Serial0
 #endif
 
 // ---------------------------------------------------------------------------
 //  USB Serial (host <-> hub)
+//  On ESP32-S3, native USB CDC uses fixed GPIO20 (D+) / GPIO19 (D-).
+//  These pins are hardware-fixed (not configurable) - do not reassign them
+//  to any other peripheral in this pin map.
+//  Requires the "USB CDC On Boot" board option to be enabled; otherwise
+//  Serial falls back to UART0, colliding with CH_RS485_SERIAL above.
 // ---------------------------------------------------------------------------
 #ifndef CH_USB_SERIAL
 #define CH_USB_SERIAL       Serial

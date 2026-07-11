@@ -38,9 +38,6 @@ void _Robot::setContact(Contact *s) { _contact = s; }
 void _Robot::_driveRaw(int16_t left, int16_t right)
 {
     if (!_leftM || !_rightM) return;    // setDriveTrain() never called
-
-    if (_leftInv)  left  = -left;
-    if (_rightInv) right = -right;
     _leftM ->rotate(left);
     _rightM->rotate(right);
 }
