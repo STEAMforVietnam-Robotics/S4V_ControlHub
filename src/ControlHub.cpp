@@ -38,13 +38,14 @@ void _ControlHub::begin(bool enUsb, bool enBle, bool enRs485,
     _initPca();
     if (enUsb)   _hub.beginUsb(CH_USB_BAUD);
     if (enBle)   _hub.beginBle(bleName);
-    if (enRs485) _hub.beginRs485(CH_RS485_BAUD);
+    if (enRs485) { _hub.beginRs485(CH_RS485_BAUD); _hub.beginRs485_2(CH_RS485_2_BAUD); }
     _installDefaultHandlers();
 }
 
 void _ControlHub::beginUSB  (unsigned long baud) { _initPca(); _hub.beginUsb  (baud); _installDefaultHandlers(); }
 void _ControlHub::beginBLE  (const char *n)      { _initPca(); _hub.beginBle  (n);    _installDefaultHandlers(); }
-void _ControlHub::beginRS485(unsigned long baud) { _initPca(); _hub.beginRs485(baud); _installDefaultHandlers(); }
+void _ControlHub::beginRS485(unsigned long baud)   { _initPca(); _hub.beginRs485(baud);   _installDefaultHandlers(); }
+void _ControlHub::beginRS485_2(unsigned long baud) { _initPca(); _hub.beginRs485_2(baud); _installDefaultHandlers(); }
 
 // ---------------------------------------------------------------------------
 //  Update
@@ -57,14 +58,17 @@ void _ControlHub::update()
 // ---------------------------------------------------------------------------
 //  Default frame handlers - route host frames to the right module
 // ---------------------------------------------------------------------------
-// Frames from RS485 are *replies* from Smart Modules, not new requests to
-// the hub. If a frame doesn't match an on-board module we only re-broadcast
-// it to the host side (USB / BLE); we never bounce it back onto RS485 (that
-// would form a routing loop).
-static inline bool fromHost(const char *src) { return strcmp(src, "RS485") != 0; }
+// Frames from either RS485 bus are *replies* from Smart Modules, not new
+// requests to the hub. Anything from RS485_1/RS485_2 that doesn't match an
+// on-board module is re-broadcast to the host side (USB / BLE).
+static inline bool fromHost(const char *src)
+{
+    return strcmp(src, "RS485") != 0 && strcmp(src, "RS485_2") != 0;
+}
 
-// Route one frame: hand it to the matching on-board module, otherwise proxy
-// between host (USB/BLE) and the RS485 Smart Module bus.
+// Route one frame: hand it to the matching on-board module. Host frames that
+// match nothing are dropped (sketches address Smart Modules explicitly via
+// sendRs485()/sendRs485_2()); smart-module replies are relayed to the host.
 void _ControlHub::_route(const Frame &f, const char *src)
 {
     for (Module *m = Module::head(); m; m = m->next()) {
@@ -73,8 +77,7 @@ void _ControlHub::_route(const Frame &f, const char *src)
             return;
         }
     }
-    if (fromHost(src)) _hub.sendRs485(f);    // proxy host -> smart module
-    else               _hub.sendFrame(f);    // relay smart-module reply -> host
+    if (!fromHost(src)) _hub.sendFrame(f);   // relay smart-module reply -> host
 }
 
 void _ControlHub::_installDefaultHandlers()

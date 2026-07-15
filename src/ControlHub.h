@@ -55,6 +55,7 @@
 #include "modules/Servo.h"
 #include "modules/Ultrasonic.h"
 #include "modules/SmartToF.h"
+#include "modules/SmartBumper.h"
 #include "modules/Contact.h"
 #include "modules/Led.h"
 #include "modules/Gamepad.h"
@@ -102,8 +103,10 @@ public:
     void beginUSB   (unsigned long baud = CH_USB_BAUD);
     /** Start only the BLE transport, advertising as @p name. */
     void beginBLE   (const char *name  = CH_BLE_DEFAULT_NAME);
-    /** Start only the RS485 (Smart Module) bus. */
+    /** Start only RS485 (Smart Module) bus #1. */
     void beginRS485 (unsigned long baud = CH_RS485_BAUD);
+    /** Start only RS485 (Smart Module) bus #2. */
+    void beginRS485_2(unsigned long baud = CH_RS485_2_BAUD);
 
     /**
      * Poll incoming frames, run closed-loop motor ticks, and dispatch
@@ -120,8 +123,11 @@ public:
     /** Send a frame to whichever host (USB / BLE) is currently attached. */
     void sendFrame  (const Frame &f) { _hub.sendFrame(f); }
 
-    /** Send a frame down the RS485 Smart Module bus. */
+    /** Send a frame down RS485 Smart Module bus #1. */
     void sendRs485  (const Frame &f) { _hub.sendRs485(f); }
+
+    /** Send a frame down RS485 Smart Module bus #2. */
+    void sendRs485_2(const Frame &f) { _hub.sendRs485_2(f); }
 
     /** Register a global handler for host-side frames (USB / BLE). */
     void onFrame(ControlHubProtocol::FrameHandler cb) { _hub.onFrame(cb); }

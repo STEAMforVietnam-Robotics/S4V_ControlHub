@@ -1,6 +1,6 @@
 # ControlHub - Arduino Library
 
-Thư viện Arduino cho mạch **Control Hub** (ESP32-S3 + DRV8874 × 6 qua PCA9685 + 4 servo + 5 cổng đa năng + RS485 cho Smart Module) dùng cho các dự án STEAM.
+Thư viện Arduino cho mạch **Control Hub** (ESP32-S3 + DRV8874 × 4 qua PCA9685 + 4 servo + 5 cổng đa năng + 2 bus RS485 cho Smart Module) dùng cho các dự án STEAM.
 
 Kiến trúc lấy cảm hứng từ **Dabble**: một file include duy nhất, mỗi module (Motor, Servo, Distance, Contact, IMU, Power…) là một class riêng, và host (PC hoặc điện thoại) có thể điều khiển đồng thời qua **USB Serial + BLE** bằng cùng một khung tin nhị phân định nghĩa trong `RVRS485060726162210.pdf`.
 
@@ -10,11 +10,10 @@ Kiến trúc lấy cảm hứng từ **Dabble**: một file include duy nhất, 
 
 | | |
 |---|---|
-| **API phân cấp** | Level 1 (`Robot.*`) - Level 2 (`motor.rotate()`, `ultrasonic.get()`) - Level 3 (PID/encoder, *đang phát triển*) |
+| **API phân cấp** | Level 1 (`Robot.*`) - Level 2 (`motor.rotate()`, `ultrasonic.get()`) |
 | **Điều khiển đồng thời** | USB Serial + BLE (Nordic UART) chạy song song, cùng nhận/gửi khung tin |
-| **Giao tiếp Smart Module** | RS485 half-duplex với DE/RE, khung tin đúng chuẩn PDF (CRC-8/SMBUS) |
-| **Hardware trực tiếp** | DRV8874 × 6 qua PCA9685, encoder trên M1/M2 (interrupt), servo qua LEDC |
-| **Proxy trong suốt** | Frame gửi từ host tới `moduleId` không tồn tại on-board sẽ được tự động chuyển tiếp ra RS485 |
+| **Giao tiếp Smart Module** | 2 bus RS485 half-duplex (DE/RE gộp 1 chân), khung tin đúng chuẩn PDF (CRC-8/SMBUS) |
+| **Hardware trực tiếp** | DRV8874 × 4 qua PCA9685, servo qua LEDC |
 
 ---
 
@@ -69,14 +68,13 @@ ControlHub/
              ▼                 ▼                  ▼
 ┌────────── RobotClass ─┐  ┌─── Motor ───┐  ┌─ Ultrasonic ─┐
 │  drive/gripper/vision │  │  DRV8874 +  │  │  HC-SR04     │
-└──────┬────────────────┘  │  PCA9685 +  │  └──────┬───────┘
-       │                   │  encoder    │         │
+└──────┬────────────────┘  │  PCA9685    │  └──────┬───────┘
        │                   └──────┬──────┘         │
        │                          │                │
        │           ┌─── frame protocol ────────────┤
        ▼           ▼                               ▼
 ┌───────────────────────── CommHub ─────────────────────────────┐
-│ dispatch(frame) → per-module callbacks / RS485 proxy          │
+│ dispatch(frame) → per-module callbacks (RS485 x2 độc lập)     │
 └──┬────────────────────────┬────────────────────────┬──────────┘
    │                        │                        │
    ▼                        ▼                        ▼
@@ -146,11 +144,9 @@ uint16_t mm  = d.get();          // khoảng cách mm (0 nếu timeout)
 uint8_t  err = d.status();
 ```
 
-### Level 3 - Device *(đang phát triển)*
-
-Điều khiển vòng kín (PID tốc độ / vị trí trên encoder M1/M2) **chưa được kích hoạt** trong bản này.
-Khối HAL đã sẵn sàng (`hal/Encoder`), API `set_P/I/D`, `set_position`, `get_speed`… sẽ được bổ sung ở
-phiên bản kế tiếp. Hiện tại Motor chạy ở chế độ open-loop (`MODE_DUTY`).
+> **Lưu ý:** Mạch không có encoder nên điều khiển vòng kín (PID tốc độ / vị trí)
+> không khả dụng. Motor chạy ở chế độ open-loop (`MODE_DUTY`); các frame
+> `MODE_SPEED` / `MODE_POSITION` được chấp nhận nhưng chỉ `MODE_DUTY` làm động cơ quay.
 
 ### System
 
@@ -188,15 +184,15 @@ Toàn bộ pin mapping nằm trong `ControlHubConfig.h`, mặc định khớp v�
 
 | Chức năng | GPIO / kênh |
 |---|---|
-| I²C (PCA9685) | SDA=13, SCL=12 |
-| M1 duty | PCA9685 ch 4 / 5, encoder GPIO7 / GPIO6 |
-| M2 duty | PCA9685 ch 11 / 10, encoder GPIO47 / GPIO21 |
-| M3–M6 duty | PCA9685 ch 0-1, 2-3, 15-14, 13-12 |
-| Servos SV1–SV4 | GPIO 41 / 40 / 38 / 39 |
+| I²C (PCA9685) | SDA=47, SCL=21 |
+| M1–M4 duty | PCA9685 ch 0-1, 2-3, 15-14, 13-12 |
+| Servos SV1–SV4 | GPIO 11 / 12 / 38 / 39 |
 | MF4P_1 | GPIO 16, 17 |
 | MF4P_2 | GPIO 18, 8 |
 | MF3P_1..3 | GPIO 3, 9, 10 |
-| RS485 | Serial0 (UART0, TX=GPIO43/RX=GPIO44), DE=GPIO2, RE=GPIO42 |
+| RS485_1 | Serial0 (UART0, TX=GPIO43/RX=GPIO44), DE/RE=GPIO2 |
+| RS485_2 | Serial1 (TX=GPIO4/RX=GPIO5), DE/RE=GPIO6 |
+| WS2812 status LED | GPIO40 |
 
 Nếu schematic thay đổi, chỉ cần chỉnh `ControlHubConfig.h` — phần còn lại của thư viện không cần đụng.
 
@@ -218,7 +214,6 @@ Nếu muốn build không dùng BLE (giảm flash), define `CH_NO_BLE` trước 
 
 ## 9. Roadmap
 
-- [ ] **Level-3 closed-loop**: PID tốc độ/vị trí trên encoder M1/M2 (nối `hal/Encoder` vào `Motor`)
 - [ ] IMU on-board (đọc trực tiếp qua I²C nếu có chip trên board)
 - [ ] Power Management on-board (INA219/INA226)
 - [ ] Truyền qua WiFi UDP như một transport thứ tư

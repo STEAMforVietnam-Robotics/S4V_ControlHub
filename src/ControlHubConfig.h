@@ -15,10 +15,10 @@
 //  I2C bus (PCA9685 lives here)
 // ---------------------------------------------------------------------------
 #ifndef CH_I2C_SDA
-#define CH_I2C_SDA          13
+#define CH_I2C_SDA          47
 #endif
 #ifndef CH_I2C_SCL
-#define CH_I2C_SCL          12
+#define CH_I2C_SCL          21
 #endif
 #ifndef CH_I2C_FREQ
 #define CH_I2C_FREQ         400000UL
@@ -35,39 +35,25 @@
 //  Each motor uses two PCA9685 channels (IN1 = forward, IN2 = reverse).
 //  M1, M2 additionally have a quadrature encoder input on ESP32 GPIOs.
 // ---------------------------------------------------------------------------
-#define CH_NUM_MOTORS       6
+#define CH_NUM_MOTORS       4
 
 // {IN1 channel, IN2 channel}
-#define CH_M1_IN1           4
-#define CH_M1_IN2           5
-#define CH_M2_IN1           11
-#define CH_M2_IN2           10
-#define CH_M3_IN1           0
-#define CH_M3_IN2           1
-#define CH_M4_IN1           2
-#define CH_M4_IN2           3
-#define CH_M5_IN1           15
-#define CH_M5_IN2           14
-#define CH_M6_IN1           13
-#define CH_M6_IN2           12
+#define CH_M1_IN1           0
+#define CH_M1_IN2           1
+#define CH_M2_IN1           2
+#define CH_M2_IN2           3
+#define CH_M3_IN1           15
+#define CH_M3_IN2           14
+#define CH_M4_IN1           13
+#define CH_M4_IN2           12
 
-// Encoder GPIOs (only M1 & M2 have them)
-#define CH_M1_ENC_A         7
-#define CH_M1_ENC_B         6
-#define CH_M2_ENC_A         47
-#define CH_M2_ENC_B         21
-
-// Counts-per-revolution for the default gearmotor. Override if needed.
-#ifndef CH_MOTOR_CPR
-#define CH_MOTOR_CPR        1000
-#endif
 
 // ---------------------------------------------------------------------------
 //  Servos - direct ESP32 LEDC PWM
 // ---------------------------------------------------------------------------
 #define CH_NUM_SERVOS       4
-#define CH_SV1_PIN          41
-#define CH_SV2_PIN          40
+#define CH_SV1_PIN          11
+#define CH_SV2_PIN          12
 #define CH_SV3_PIN          38
 #define CH_SV4_PIN          39
 #define CH_SERVO_FREQ       50      // Hz
@@ -76,7 +62,7 @@
 
 // ---------------------------------------------------------------------------
 //  Multi-function ports
-//  MF4P : two signal lines each (I2C / UART / dual GPIO)
+//  MF4P : two signal lines each (I2C1 / UART2 / dual GPIO)
 //  MF3P : one signal line each  (GPIO / ADC / PWM / 1-Wire)
 // ---------------------------------------------------------------------------
 #define CH_NUM_MF4P         2
@@ -97,7 +83,7 @@
 // ---------------------------------------------------------------------------
 //  WS2812 / NeoPixel LED strip
 // ---------------------------------------------------------------------------
-#define CH_LED_STATUS_PIN 11
+#define CH_LED_STATUS_PIN 40
 #define CH_LED_STATUS_NUM 12
 
 // ---------------------------------------------------------------------------
@@ -115,10 +101,9 @@
 #endif
 
 // ---------------------------------------------------------------------------
-//  RS485  (Smart Module bus - uses UART0 (Serial0) TXD0/RXD0 with DE/RE)
+//  RS485_1  (Smart Module bus - uses UART0 (Serial0) TXD0/RXD0 with DE/RE)
 // ---------------------------------------------------------------------------
-#define CH_RS485_DE         2
-#define CH_RS485_RE         42
+#define CH_RS485_DE_RE         2
 #ifndef CH_RS485_BAUD
 #define CH_RS485_BAUD       115200
 #endif
@@ -131,6 +116,21 @@
 // pins (RX1=GPIO15/TX1=GPIO16) collide with CH_MF4P_1_SIG1.
 #ifndef CH_RS485_SERIAL
 #define CH_RS485_SERIAL     Serial0
+#endif
+
+
+
+// ---------------------------------------------------------------------------
+//  RS485_2  (Smart Module bus - uses UART1 (Serial1) TXD1/RXD1 with DE/RE)
+// ---------------------------------------------------------------------------
+#define CH_RS485_2_DE_RE 6           
+#ifndef CH_RS485_2_BAUD
+#define CH_RS485_2_BAUD       115200
+#endif
+
+// pins (RX1=GPIO5/TX1=GPIO4)
+#ifndef CH_RS485_2_SERIAL
+#define CH_RS485_2_SERIAL     Serial1
 #endif
 
 // ---------------------------------------------------------------------------

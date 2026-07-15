@@ -12,13 +12,19 @@
 
 #include <ControlHub.h>
 
-SmartToF tof(0x00);
+// Smart ToF module ID 0x00 trên bus RS485_1.
+// Đổi sang RS485_2 nếu module cắm ở bus thứ hai:  SmartToF tof(0x00, RS485_2);
+SmartToF tof(0x00, RS485_1);
+
+// Smart Bumper module ID 0x00 trên bus RS485_1.
+SmartBumper bumper(0x00, RS485_1);
 
 void setup() {
     Serial.begin(115200);
     // Only need RS485 for this example
     ControlHub.begin(/*USB=*/true, /*BLE=*/false, /*RS485=*/true);
     tof.begin();
+    bumper.begin();
 }
 
 void loop() {
@@ -32,6 +38,17 @@ void loop() {
             Serial.printf("Smart ToF: %u mm\n", mm);
         } else {
             Serial.println("Smart ToF: timeout");
+        }
+    }
+
+    static uint32_t nextBumper = 0;
+    if (millis() > nextBumper) {
+        nextBumper = millis() + 200;
+        bool pressed = bumper.get();   // blocking round-trip over RS485
+        if (bumper.status() == 0) {
+            Serial.printf("Smart Bumper: %s\n", pressed ? "PRESSED" : "released");
+        } else {
+            Serial.println("Smart Bumper: timeout");
         }
     }
 

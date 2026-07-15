@@ -1,8 +1,9 @@
 /*  Rs485Transport.h
  *
- *  Half-duplex RS485 transceiver driver. Uses one HardwareSerial plus two
- *  GPIOs (DE, RE) to switch bus direction. During transmit DE=1 & RE=1;
- *  during receive both are pulled low so the hub only listens.
+ *  Half-duplex RS485 transceiver driver. Uses one HardwareSerial plus one
+ *  GPIO (DE/RE tied together) to switch bus direction. During transmit the
+ *  pin is HIGH (driver enabled); during receive it is LOW so the hub only
+ *  listens.
  */
 
 #ifndef CONTROLHUB_RS485_TRANSPORT_H
@@ -16,8 +17,7 @@ namespace ControlHubProtocol {
 class Rs485Transport : public Transport {
 public:
     Rs485Transport(HardwareSerial &serial = CH_RS485_SERIAL,
-                   int dePin  = CH_RS485_DE,
-                   int rePin  = CH_RS485_RE);
+                   int deRePin = CH_RS485_DE_RE);
 
     /** Configure UART pins and baud. rxPin/txPin=-1 keeps board defaults. */
     void begin(unsigned long baud = CH_RS485_BAUD,
@@ -35,7 +35,7 @@ private:
     void _rxMode();
 
     HardwareSerial &_ser;
-    int  _dePin, _rePin;
+    int  _deRePin;
     bool _started = false;
 };
 

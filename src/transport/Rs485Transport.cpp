@@ -2,15 +2,14 @@
 
 namespace ControlHubProtocol {
 
-Rs485Transport::Rs485Transport(HardwareSerial &serial, int dePin, int rePin)
-    : _ser(serial), _dePin(dePin), _rePin(rePin) {}
+Rs485Transport::Rs485Transport(HardwareSerial &serial, int deRePin)
+    : _ser(serial), _deRePin(deRePin) {}
 
 void Rs485Transport::begin(unsigned long baud, int8_t rxPin, int8_t txPin)
 {
     if (_started) return;
 
-    pinMode(_dePin, OUTPUT);
-    pinMode(_rePin, OUTPUT);
+    pinMode(_deRePin, OUTPUT);
     _rxMode();
 
     if (rxPin >= 0 || txPin >= 0) {
@@ -30,14 +29,12 @@ void Rs485Transport::end()
 
 void Rs485Transport::_txMode()
 {
-    digitalWrite(_rePin, HIGH);   // disable receiver
-    digitalWrite(_dePin, HIGH);   // enable driver
+    digitalWrite(_deRePin, HIGH);   // enable driver, disable receiver
 }
 
 void Rs485Transport::_rxMode()
 {
-    digitalWrite(_dePin, LOW);    // disable driver
-    digitalWrite(_rePin, LOW);    // enable receiver
+    digitalWrite(_deRePin, LOW);    // disable driver, enable receiver
 }
 
 int Rs485Transport::available()

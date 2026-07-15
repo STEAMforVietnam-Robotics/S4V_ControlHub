@@ -15,6 +15,7 @@
 #define CONTROLHUB_SMARTTOF_H
 
 #include <Arduino.h>
+#include "../ControlHubTypes.h"
 #include "../protocol/Frame.h"
 #include "Module.h"
 
@@ -22,8 +23,9 @@ namespace ControlHubProtocol { class CommHub; }
 
 class SmartToF : public Module {
 public:
-    /** @param id wire ID of the Smart Module on the RS485 bus. */
-    explicit SmartToF(uint8_t id = 0);
+    /** @param id  wire ID of the Smart Module on the RS485 bus.
+     *  @param bus which RS485 bus the module is on (RS485_1 or RS485_2). */
+    explicit SmartToF(uint8_t id = 0, Rs485Bus bus = RS485_1);
 
     void begin() override;
 
@@ -46,6 +48,7 @@ public:
 
 private:
     uint8_t  _id;
+    Rs485Bus _bus;
 
     uint16_t _lastMm = 0;
     uint8_t  _fault  = 0;

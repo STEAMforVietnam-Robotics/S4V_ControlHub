@@ -13,11 +13,9 @@ Motor::Motor(MotorPort port, bool reverse) : _reverse(reverse)
         case M2: _ch1 = CH_M2_IN1; _ch2 = CH_M2_IN2; break;
         case M3: _ch1 = CH_M3_IN1; _ch2 = CH_M3_IN2; break;
         case M4: _ch1 = CH_M4_IN1; _ch2 = CH_M4_IN2; break;
-        case M5: _ch1 = CH_M5_IN1; _ch2 = CH_M5_IN2; break;
-        case M6: _ch1 = CH_M6_IN1; _ch2 = CH_M6_IN2; break;
         default: _ch1 = CH_M1_IN1; _ch2 = CH_M1_IN2; break;
     }
-    _id = static_cast<uint8_t>(port);       // wire ID == port number (1..6)
+    _id = static_cast<uint8_t>(port);       // wire ID == port number (1..4)
 }
 
 void Motor::begin()

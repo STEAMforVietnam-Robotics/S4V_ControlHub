@@ -4,7 +4,7 @@
 
 using namespace ControlHubProtocol;
 
-SmartToF::SmartToF(uint8_t id) : _id(id) {}
+SmartToF::SmartToF(uint8_t id, Rs485Bus bus) : _id(id), _bus(bus) {}
 
 void SmartToF::begin()
 {
@@ -14,7 +14,10 @@ void SmartToF::begin()
 uint16_t SmartToF::get(uint32_t timeoutMs)
 {
     Frame reply;
-    if (!::ControlHub.comm().requestRs485(MOD_TOF, _id, reply, timeoutMs)) {
+    bool ok = (_bus == RS485_2)
+                  ? ::ControlHub.comm().requestRs485_2(MOD_TOF, _id, reply, timeoutMs)
+                  : ::ControlHub.comm().requestRs485  (MOD_TOF, _id, reply, timeoutMs);
+    if (!ok) {
         _fault  = 1;   // timeout - no reply from the Smart Module
         _lastMm = 0;
         return 0;

@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 
-// ----- Motor identifier (1..6) -----
+// ----- Motor identifier (1..4) -----
 // IDs are 1-based: MotorManager::_idx() maps id N → array index N-1, so MOTOR_1
 // must equal 1 (not 0) for motor 1 to be addressable.
 enum MotorPort : uint8_t {
@@ -13,9 +13,7 @@ enum MotorPort : uint8_t {
     M2,
     M3,
     M4,
-    M5,
-    M6,
-    MOTOR_PORT_COUNT_ = 6      // sentinel (== number of motors)
+    MOTOR_PORT_COUNT_ = 4      // sentinel (== number of motors)
 };
 
 // ----- Servo identifier (1..4) -----
@@ -26,6 +24,13 @@ enum ServoPort : uint8_t {
     S3,
     S4,
     SERVO_PORT_COUNT_ = 4
+};
+
+// ----- RS485 bus selector -----
+// The board exposes two independent RS485 Smart Module buses.
+enum Rs485Bus : uint8_t {
+    RS485_1 = 0,
+    RS485_2 = 1
 };
 
 // ----- Multi-function port identifier -----

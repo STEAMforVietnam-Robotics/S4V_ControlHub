@@ -5,10 +5,9 @@
  *  Levels of API exposed today:
  *      L2  rotate() / stop()
  *
- *  Level-3 closed-loop (speed / position PID on the M1/M2 encoders) is not
- *  wired up yet — see hal/Encoder for the building block. Control frames with
- *  MODE_SPEED / MODE_POSITION are accepted but currently only MODE_DUTY moves
- *  the motor.
+ *  This board has no encoders, so closed-loop (speed / position) control is
+ *  not available. Control frames with MODE_SPEED / MODE_POSITION are accepted
+ *  but only MODE_DUTY (open loop) actually moves the motor.
  *
  *  The class also handles incoming Motor frames (0x05) forwarded by the
  *  CommHub, so a host on USB/BLE can drive the motor with the exact frame
@@ -33,7 +32,7 @@ extern Adafruit_PWMServoDriver pca;   // global PCA9685 instance (defined in Con
 class Motor : public Module {
 public:
     /**
-     * @param port    selects M1..M6
+     * @param port    selects M1..M4
      * @param reverse if true, the motor's "forward" direction is inverted.
      */
     explicit Motor(MotorPort port, bool reverse = false);
