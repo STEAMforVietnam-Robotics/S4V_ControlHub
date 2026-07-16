@@ -12,7 +12,7 @@
  *          strip.clear();
  *
  *  Frame protocol: MOD_LED
- *      MOTOR_MSG_CONTROL, data = [index, r, g, b, (brightness)]
+ *      MSG_CONTROL, data = [index, r, g, b, (brightness)]
  *          index == 0xFF -> all LEDs
  *      RTR -> status: [count_hi, count_lo, brightness, fault]
  */

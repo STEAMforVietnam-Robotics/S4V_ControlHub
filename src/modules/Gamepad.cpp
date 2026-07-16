@@ -35,7 +35,7 @@ void Gamepad::handleFrame(const Frame &f, CommHub &hub)
         return;
     }
 
-    if (f.msgId == MOTOR_MSG_CONTROL && f.dlc >= 6) {
+    if (f.msgId == MSG_CONTROL && f.dlc >= 6) {
         _prevButtons = _buttons;
         _buttons = ((uint16_t)f.data[0] << 8) | f.data[1];
         _lx = f.data[2];

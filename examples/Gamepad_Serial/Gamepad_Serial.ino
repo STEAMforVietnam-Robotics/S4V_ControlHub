@@ -10,7 +10,7 @@
  *      2. Kết nối tới "ControlHub" bằng webapp/ (panel Gamepad) hoặc nRF Connect.
  *      3. Bấm nút / kéo joystick -> trạng thái in ra Serial.
  *
- *  Wire format (MOD_GAMEPAD, MOTOR_MSG_CONTROL, dlc = 6):
+ *  Wire format (MOD_GAMEPAD,MSG_CONTROL, dlc = 6):
  *      data[0] = buttons hi,  data[1] = buttons lo
  *      data[2] = leftX,  data[3] = leftY,  data[4] = rightX,  data[5] = rightY
  *      (trục 0..255, 128 = giữa; API quy về -100..100 với deadzone ~8%)

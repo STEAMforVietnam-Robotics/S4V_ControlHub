@@ -44,7 +44,7 @@ Frame Frame::makeMotorControl(uint8_t id, int16_t duty, MotorMode mode)
     Frame f;
     f.moduleType = MOD_MOTOR;
     f.moduleId   = id;
-    f.msgId      = MOTOR_MSG_CONTROL;
+    f.msgId      = MSG_CONTROL;
     f.rtr        = 0;
     f.dlc        = 3;
     f.data[0]    = static_cast<uint8_t>((duty >> 8) & 0xFF);   // upper
@@ -58,7 +58,7 @@ Frame Frame::makeMotorConfig(uint8_t currentId, uint8_t newId)
     Frame f;
     f.moduleType = MOD_MOTOR;
     f.moduleId   = currentId;
-    f.msgId      = MOTOR_MSG_CONFIG;
+    f.msgId      = MSG_CONFIG;
     f.rtr        = 0;
     f.dlc        = 1;
     f.data[0]    = newId;

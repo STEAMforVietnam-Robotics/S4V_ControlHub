@@ -13,7 +13,7 @@
  *          if (gp.justPressed(GP_A)) ControlHub.statusOk();
  *      }
  *
- *  Wire format (MOD_GAMEPAD, MOTOR_MSG_CONTROL, dlc = 6):
+ *  Wire format (MOD_GAMEPAD, MSG_CONTROL, dlc = 6):
  *      data[0] = buttons hi (bit 8..13)
  *      data[1] = buttons lo (bit 0..7)
  *      data[2] = leftX   (128 = centre)

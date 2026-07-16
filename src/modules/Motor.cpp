@@ -62,7 +62,7 @@ Frame Motor::makeStatusFrame(uint8_t faultCode) const
     Frame f;
     f.moduleType = MOD_MOTOR;
     f.moduleId   = _id;
-    f.msgId      = MOTOR_MSG_STATUS;
+    f.msgId      = MSG_STATUS;
     f.rtr        = 0;
     f.dlc        = 8;
     f.data[0] = (uint8_t)((_lastDuty >> 8) & 0xFF);   // duty upper
@@ -84,7 +84,7 @@ void Motor::handleFrame(const Frame &f, CommHub &hub)
     }
 
     switch (f.msgId) {
-    case MOTOR_MSG_CONTROL: {
+    case MSG_CONTROL: {
         // Byte0 upper, Byte1 lower : duty x100 (signed)
         int16_t duty = (int16_t)(((uint16_t)f.data[0] << 8) | f.data[1]);
         _mode = (f.dlc >= 3) ? f.data[2] : (uint8_t)MODE_DUTY;
@@ -93,7 +93,7 @@ void Motor::handleFrame(const Frame &f, CommHub &hub)
         _writeDuty(duty);
         break;
     }
-    case MOTOR_MSG_CONFIG:
+    case MSG_CONFIG:
         // Byte0 = new ID. Lets a host rename an on-board motor at runtime.
         if (f.dlc >= 1) _id = f.data[0];
         break;

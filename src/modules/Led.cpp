@@ -95,7 +95,7 @@ void Led::handleFrame(const Frame &f, CommHub &hub)
         return;
     }
 
-    if (f.msgId == MOTOR_MSG_CONTROL && f.dlc >= 4) {
+    if (f.msgId == MSG_CONTROL && f.dlc >= 4) {
         // data = [index, r, g, b, (brightness)]
         uint8_t index = f.data[0];
         uint8_t r = f.data[1], g = f.data[2], b = f.data[3];

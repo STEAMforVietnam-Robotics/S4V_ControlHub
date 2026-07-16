@@ -81,7 +81,7 @@ void Servo::handleFrame(const Frame &f, CommHub &hub)
         return;
     }
 
-    if (f.msgId == MOTOR_MSG_CONTROL && f.dlc >= 1) {
+    if (f.msgId == MSG_CONTROL && f.dlc >= 1) {
         // Control frame: Byte0 = target angle in degrees (0..180).
         write(f.data[0]);
     }

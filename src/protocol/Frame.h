@@ -35,21 +35,18 @@ enum ModuleType : uint8_t {
 // ---- Msg IDs -------------------------------------------------------------
 // Motor Driver
 enum MotorMsgId : uint8_t {
-    MOTOR_MSG_CONTROL = 0x01,   // set duty / speed / position
-    MOTOR_MSG_CONFIG  = 0x02,   // set ID (or other config)
-    MOTOR_MSG_STATUS  = 0x11    // feedback (RTR or async)
+    MSG_CONTROL = 0x01,   // set duty / speed / position
+    MSG_CONFIG  = 0x02,   // set ID (or other config)
+    MSG_STATUS  = 0x11    // feedback (RTR or async); sensors & power reuse this
 };
-
-// Sensors & Power all use 0x11 for their status frame
-constexpr uint8_t MSG_STATUS = 0x11;
 
 // Phone Sensor - dữ liệu đẩy từ app điện thoại qua BLE (push-only, không RTR)
 enum PhoneMsgId : uint8_t {
-    PHONE_MSG_ACCEL   = 0x01,   // 3x int16 big-endian, đơn vị mg (milli-g), scale 1000 = 1g
-    PHONE_MSG_GYRO    = 0x02,   // 3x int16 big-endian, đơn vị 0.1 deg/s
-    PHONE_MSG_MAG     = 0x03,   // 3x int16 big-endian, đơn vị 0.1 µT
-    PHONE_MSG_GPS     = 0x04,   // lat (int32) + lon (int32), độ * 1e7
-    PHONE_MSG_GPS_ALT = 0x05    // alt (int16), đơn vị decimet (0.1 m)
+    PHONE_MSG_ACCEL   = 0x11,   // 3x int16 big-endian, đơn vị mg (milli-g), scale 1000 = 1g
+    PHONE_MSG_GYRO    = 0x12,   // 3x int16 big-endian, đơn vị 0.1 deg/s
+    PHONE_MSG_MAG     = 0x13,   // 3x int16 big-endian, đơn vị 0.1 µT
+    PHONE_MSG_GPS     = 0x14,   // lat (int32) + lon (int32), độ * 1e7
+    PHONE_MSG_GPS_ALT = 0x15    // alt (int16), đơn vị decimet (0.1 m)
 };
 
 // ---- Motor control modes (byte[2] of a Control Frame) -------------------
