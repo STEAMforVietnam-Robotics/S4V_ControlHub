@@ -109,6 +109,15 @@ class FrameParser:
         self._state = _S_HEADER
         self._idx = 0
 
+    def is_idle(self):
+        """True between frames (waiting for the 0x55 sync byte).
+
+        A byte value can never legitimately be mid-frame data while idle, so
+        callers can use this to safely recognise out-of-band control bytes
+        (e.g. Ctrl-C) without risking a collision with real payload bytes.
+        """
+        return self._state == _S_HEADER
+
     def feed(self, b):
         b &= 0xFF
         st = self._state

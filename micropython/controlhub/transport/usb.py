@@ -48,6 +48,22 @@ class UsbTransport:
         self._poll.register(self._in, select.POLLIN)
         self._begun = True
 
+    def end(self):
+        """Give the native USB-CDC channel back to the REPL.
+
+        Called once a Ctrl-C stop request has been recognised (see
+        CommHub._drain / FrameParser.is_idle) so Ctrl-C and file access work
+        normally again without needing a physical reset.
+        """
+        if not self._begun:
+            return
+        self._begun = False
+        if micropython is not None:
+            try:
+                micropython.kbd_intr(3)   # restore default interrupt char
+            except Exception:
+                pass
+
     def connected(self):
         # USB-CDC is effectively always "connected" once begin() ran.
         return self._begun

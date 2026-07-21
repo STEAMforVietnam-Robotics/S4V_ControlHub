@@ -70,7 +70,7 @@ CH_PHONE_SENSOR_TIMEOUT_MS = 600
 #  so re-opening UART(0) fails with ESP_ERR_INVALID_STATE. Using UART1 leaves
 #  UART0 + the REPL untouched.
 # ---------------------------------------------------------------------------
-CH_RS485_UART = 1
+CH_RS485_UART = 0
 CH_RS485_TX = 43
 CH_RS485_RX = 44
 CH_RS485_DE_RE = 2
