@@ -61,10 +61,12 @@ public:
                         Frame &reply, uint32_t timeoutMs = 50);
 
     // ---- routing -------------------------------------------------------
-    /** Global catch-all handler - called for every valid host frame. */
+    /** Global catch-all handler - called for every valid frame, in addition
+     *  to any per-module handler. */
     void onFrame(FrameHandler cb) { _globalCb = cb; }
 
-    /** Per-module handler; overrides global for that module type. */
+    /** Per-module handler; called alongside the global handler for that
+     *  module type. */
     void onModule(uint8_t moduleType, FrameHandler cb);
 
     // ---- accessors -----------------------------------------------------

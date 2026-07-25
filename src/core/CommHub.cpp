@@ -43,22 +43,6 @@ void CommHub::update()
         if (_bleParser.feed(uint8_t(b), f))
             _dispatch(f, "BLE");
     }
-
-    _rs485.poll();
-    while (_rs485.available() > 0) {
-        int b = _rs485.read();
-        if (b < 0) break;
-        if (_rs485Parser.feed(uint8_t(b), f))
-            _dispatch(f, "RS485");
-    }
-
-    _rs485_2.poll();
-    while (_rs485_2.available() > 0) {
-        int b = _rs485_2.read();
-        if (b < 0) break;
-        if (_rs485_2Parser.feed(uint8_t(b), f))
-            _dispatch(f, "RS485_2");
-    }
 }
 
 // ---------------------------------------------------------------------------
@@ -159,7 +143,8 @@ void CommHub::_dispatch(const Frame &f, const char *src)
 {
     if (f.moduleType < MAX_MODULE_HANDLERS && _moduleCb[f.moduleType]) {
         _moduleCb[f.moduleType](f, src);
-    } else if (_globalCb) {
+    }
+    if (_globalCb) {
         _globalCb(f, src);
     }
 }
