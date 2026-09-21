@@ -35,8 +35,8 @@ void Servo::begin()
     ledcSetup(_chan, CH_SERVO_FREQ, SERVO_RES_BITS);
     ledcAttachPin(_pin, _chan);
 #endif
-    writeMicroseconds(1500);           // center
     _begun = true;
+    writeMicroseconds(1500);           // center
 }
 
 void Servo::writeMicroseconds(uint16_t us)
