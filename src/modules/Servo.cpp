@@ -3,11 +3,20 @@
 
 using namespace ControlHubProtocol;
 
-// LEDC configuration: 50 Hz, 16-bit resolution -> 1 tick = ~305 ns
-static constexpr uint8_t  SERVO_RES_BITS = 16;
-static constexpr uint32_t SERVO_MAX_DUTY = (1UL << SERVO_RES_BITS) - 1;
-// Period at 50 Hz = 20 000 us  -> ticks per us
-static constexpr float    US_TO_TICKS    = (float)SERVO_MAX_DUTY / 20000.0f;
+// LEDC configuration: 50 Hz. The ESP32-S3 LEDC timer is only 14 bits wide
+// (SOC_LEDC_TIMER_BIT_WIDTH); asking for more makes ledcAttach()/ledcSetup()
+// fail outright and the servo stays silent. 14 bits at 50 Hz gives
+// 20000 us / 16384 = ~1.22 us per tick, roughly 0.11 deg on a 180 deg servo.
+#if defined(SOC_LEDC_TIMER_BIT_WIDTH)
+static constexpr uint8_t SERVO_RES_BITS = (SOC_LEDC_TIMER_BIT_WIDTH < 14)
+                                        ? SOC_LEDC_TIMER_BIT_WIDTH : 14;
+#else
+static constexpr uint8_t SERVO_RES_BITS = 14;
+#endif
+// Duty counts over one full period (LEDC counts 0..2^bits, not 2^bits - 1).
+static constexpr uint32_t SERVO_FULL_SCALE = (1UL << SERVO_RES_BITS);
+static constexpr float    SERVO_PERIOD_US  = 1000000.0f / (float)CH_SERVO_FREQ;
+static constexpr float    US_TO_TICKS      = (float)SERVO_FULL_SCALE / SERVO_PERIOD_US;
 
 Servo::Servo(ServoPort port, uint16_t servoType) : _port(port), _servoType(servoType)
 {
@@ -29,10 +38,10 @@ void Servo::begin()
     if (_begun) return;
 #if defined(ESP_ARDUINO_VERSION_MAJOR) && (ESP_ARDUINO_VERSION_MAJOR >= 3)
     // Arduino-ESP32 3.x: pin-based API, channels are auto-allocated
-    ledcAttach(_pin, CH_SERVO_FREQ, SERVO_RES_BITS);
+    if (!ledcAttach(_pin, CH_SERVO_FREQ, SERVO_RES_BITS)) return;
 #else
     // Arduino-ESP32 2.x: channel-based API
-    ledcSetup(_chan, CH_SERVO_FREQ, SERVO_RES_BITS);
+    if (ledcSetup(_chan, CH_SERVO_FREQ, SERVO_RES_BITS) == 0) return;
     ledcAttachPin(_pin, _chan);
 #endif
     _begun = true;
@@ -42,6 +51,7 @@ void Servo::begin()
 void Servo::writeMicroseconds(uint16_t us)
 {
     if (!_begun) begin();
+    if (!_begun) return;               // LEDC setup failed - nothing to drive
     if (us < CH_SERVO_MIN_US) us = CH_SERVO_MIN_US;
     if (us > CH_SERVO_MAX_US) us = CH_SERVO_MAX_US;
     _lastUs = us;
