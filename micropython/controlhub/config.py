@@ -121,19 +121,19 @@ RS485_1 = 0
 RS485_2 = 1
 
 # ----- Multi-function port identifier -----
-PORT_MF4P_1 = 0
-PORT_MF4P_2 = 1
-PORT_MF3P_1 = 2
-PORT_MF3P_2 = 3
-PORT_MF3P_3 = 4
+P1 = 0
+P2 = 1
+P3 = 2
+P4 = 3
+P5 = 4
 
 # Map port id -> (sig1_pin, sig2_pin_or_None)
 CH_PORT_PINS = {
-    PORT_MF4P_1: (CH_MF4P_1_SIG1, CH_MF4P_1_SIG2),
-    PORT_MF4P_2: (CH_MF4P_2_SIG1, CH_MF4P_2_SIG2),
-    PORT_MF3P_1: (CH_MF3P_1_SIG, None),
-    PORT_MF3P_2: (CH_MF3P_2_SIG, None),
-    PORT_MF3P_3: (CH_MF3P_3_SIG, None),
+    P1: (CH_MF4P_1_SIG1, CH_MF4P_1_SIG2),
+    P2: (CH_MF4P_2_SIG1, CH_MF4P_2_SIG2),
+    P3: (CH_MF3P_1_SIG, None),
+    P4: (CH_MF3P_2_SIG, None),
+    P5: (CH_MF3P_3_SIG, None),
 }
 
 # ----- Motor stopping behaviour -----

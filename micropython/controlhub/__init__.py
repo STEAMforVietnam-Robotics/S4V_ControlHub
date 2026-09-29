@@ -3,11 +3,11 @@
 Port of the Arduino/C++ ControlHub library. Typical sketch:
 
     from controlhub import control_hub as hub, robot, Motor, Servo, Ultrasonic, \
-        Contact, M1, M2, S1, PORT_MF4P_1
+        Contact, M1, M2, S1, P1
 
     left, right = Motor(M1), Motor(M2)
     gripper = Servo(S1)
-    dist = Ultrasonic(PORT_MF4P_1)
+    dist = Ultrasonic(P1)
 
     hub.begin()                       # USB + BLE + RS485, brings up all modules
     robot.set_drive_train(left, right)

@@ -8,7 +8,7 @@
 #include <ControlHub.h>
 
 Motor      m0(M1), m1(M2);
-Ultrasonic dist(PORT_MF4P_1);           // HC-SR04 on MF4P_1 (trig/echo)
+Ultrasonic dist(P1);           // HC-SR04 on MF4P_1 (trig/echo)
 
 void setup() {
     Serial.begin(115200);

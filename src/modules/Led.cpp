@@ -8,11 +8,11 @@ Led::Led(Port port, uint16_t count, uint8_t id)
       _px(count, 0, NEO_GRB + NEO_KHZ800)
 {
     switch (_port) {
-        case PORT_MF4P_1: _pin = CH_MF4P_1_SIG1; break;
-        case PORT_MF4P_2: _pin = CH_MF4P_2_SIG1; break;
-        case PORT_MF3P_1: _pin = CH_MF3P_1_SIG;  break;
-        case PORT_MF3P_2: _pin = CH_MF3P_2_SIG;  break;
-        case PORT_MF3P_3: _pin = CH_MF3P_3_SIG;  break;
+        case P1: _pin = CH_MF4P_1_SIG1; break;
+        case P2: _pin = CH_MF4P_2_SIG1; break;
+        case P3: _pin = CH_MF3P_1_SIG;  break;
+        case P4: _pin = CH_MF3P_2_SIG;  break;
+        case P5: _pin = CH_MF3P_3_SIG;  break;
         default:          _pin = -1;             break;
     }
 }

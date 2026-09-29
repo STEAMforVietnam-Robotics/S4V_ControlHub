@@ -16,8 +16,8 @@
 Motor      leftM (M1);
 Motor      rightM(M2);
 Servo      gripper(S1);                 // SV1
-Ultrasonic dSensor(PORT_MF4P_1);        // trig = SIG1, echo = SIG2
-Contact    bumper (PORT_MF3P_2);
+Ultrasonic dSensor(P1);        // trig = SIG1, echo = SIG2
+Contact    bumper (P4);
 
 void setup() {
     ControlHub.begin();

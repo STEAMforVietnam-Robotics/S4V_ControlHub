@@ -11,14 +11,14 @@ Wiring:
 from controlhub import (
     control_hub as hub, robot,
     Motor, Servo, Ultrasonic, Contact,
-    M1, M2, S1, PORT_MF4P_1, PORT_MF3P_2,
+    M1, M2, S1, P1, P4,
 )
 
 left = Motor(M1)
 right = Motor(M2)
 gripper = Servo(S1)
-dist = Ultrasonic(PORT_MF4P_1)
-bumper = Contact(PORT_MF3P_2)
+dist = Ultrasonic(P1)
+bumper = Contact(P4)
 
 hub.begin()
 

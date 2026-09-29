@@ -34,10 +34,10 @@ trong `examples/` rồi bấm Run. Để chạy tự động khi cấp nguồn, 
 
 ```python
 from controlhub import control_hub as hub, robot, Motor, Ultrasonic, \
-    M1, M2, PORT_MF4P_1
+    M1, M2, P1
 
 left, right = Motor(M1), Motor(M2)
-dist = Ultrasonic(PORT_MF4P_1)
+dist = Ultrasonic(P1)
 
 hub.begin()                       # USB + BLE + RS485, tự khởi động mọi module
 robot.set_drive_train(left, right)
@@ -76,8 +76,8 @@ Các ví dụ khác trong `examples/`:
 | `Robot.setDriveTrain(&l,&r)` | `robot.set_drive_train(l, r)` |
 | `Motor m(M1); m.rotate(60)` | `m = Motor(M1); m.rotate(60)` |
 | `Servo s(S1); s.write(90)` | `s = Servo(S1); s.write(90)` |
-| `Ultrasonic d(PORT_MF4P_1); d.get()` | `d = Ultrasonic(PORT_MF4P_1); d.get()` |
-| `Contact b(PORT_MF3P_2); b.get()` | `b = Contact(PORT_MF3P_2); b.get()` |
+| `Ultrasonic d(P1); d.get()` | `d = Ultrasonic(P1); d.get()` |
+| `Contact b(P5); b.get()` | `b = Contact(P5); b.get()` |
 | `SysCtrl.wait_sec(1.0)` | `sys_ctrl.wait_sec(1.0)` |
 | `Frame::makeMotorControl(...)` | `Frame.make_motor_control(...)` |
 

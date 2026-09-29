@@ -11,10 +11,10 @@ void Ultrasonic::begin()
 {
     if (_begun) return;
 
-    if (_port == PORT_MF4P_1) {
+    if (_port == P1) {
         _trig = CH_MF4P_1_SIG1;
         _echo = CH_MF4P_1_SIG2;
-    } else if (_port == PORT_MF4P_2) {
+    } else if (_port == P2) {
         _trig = CH_MF4P_2_SIG1;
         _echo = CH_MF4P_2_SIG2;
     } else {

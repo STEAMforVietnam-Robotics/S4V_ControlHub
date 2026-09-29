@@ -8,7 +8,7 @@ import time
 
 from .module import Module
 from ..config import (
-    CH_PORT_PINS, PORT_MF4P_1, PORT_MF4P_2,
+    CH_PORT_PINS, P1, P2,
     MOD_ULTRASONIC, MSG_STATUS,
 )
 from ..frame import Frame
@@ -34,7 +34,7 @@ class Ultrasonic(Module):
     def begin(self):
         if self._begun:
             return
-        if self._port not in (PORT_MF4P_1, PORT_MF4P_2):
+        if self._port not in (P1, P2):
             self._begun = False              # needs a 4-pin port
             return
         trig_pin, echo_pin = CH_PORT_PINS[self._port]

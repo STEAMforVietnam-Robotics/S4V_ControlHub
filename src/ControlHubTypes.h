@@ -35,11 +35,11 @@ enum Rs485Bus : uint8_t {
 
 // ----- Multi-function port identifier -----
 enum Port : uint8_t {
-    PORT_MF4P_1 = 0,    // 4-pin: SIG1+SIG2 (e.g. HC-SR04 trig+echo)
-    PORT_MF4P_2,
-    PORT_MF3P_1,        // 3-pin: single SIG
-    PORT_MF3P_2,
-    PORT_MF3P_3
+    P1 = 0,    // 4-pin: SIG1+SIG2 (e.g. HC-SR04 trig+echo)
+    P2,
+    P3,        // 3-pin: single SIG
+    P4,
+    P5
 };
 
 // NOTE: Motor control modes live in protocol/Frame.h as `MotorMode`

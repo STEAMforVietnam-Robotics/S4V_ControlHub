@@ -4,7 +4,7 @@
  *  Uses the Adafruit NeoPixel library for the RMT bit-banging.
  *
  *      L1/L2 API:
- *          Led strip(PORT_MF3P_1, 8);
+ *          Led strip(P3, 8);
  *          strip.begin();
  *          strip.setColor(0, 0, 255);       // all LEDs blue
  *          strip.setPixel(0, 255, 0, 0);    // first LED red
@@ -34,7 +34,7 @@ public:
     /** @param port data line (MF3P single SIG, or MF4P SIG1).
      *  @param count number of WS2812 LEDs in the strip.
      *  @param id led ID. */
-    explicit Led(Port port = PORT_MF3P_1, uint16_t count = 8, uint8_t id = 0);
+    explicit Led(Port port = P3, uint16_t count = 8, uint8_t id = 0);
 
     void begin() override;
 

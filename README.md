@@ -135,7 +135,7 @@ bool touch = Robot.is_obstacle_touched();
 
 ```cpp
 Motor      m(M1);
-Ultrasonic d(PORT_MF4P_1);       // HC-SR04: trig=SIG1, echo=SIG2
+Ultrasonic d(P1);       // HC-SR04: trig=SIG1, echo=SIG2
 
 m.rotate(60);                    // -100..100 %
 m.stop();

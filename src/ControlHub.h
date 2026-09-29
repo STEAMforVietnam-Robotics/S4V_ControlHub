@@ -6,8 +6,8 @@
  *
  *      Motor      leftM (M1), rightM(M2);
  *      Servo      gripper(S1);
- *      Ultrasonic dSensor(PORT_MF4P_1);
- *      Contact    bumper (PORT_MF3P_2);
+ *      Ultrasonic dSensor(P1);
+ *      Contact    bumper (P4);
  *
  *      void setup() {
  *          ControlHub.begin();               // USB + BLE + RS485 all on

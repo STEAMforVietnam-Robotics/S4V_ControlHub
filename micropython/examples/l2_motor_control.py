@@ -3,11 +3,11 @@ sensors directly, without the Robot abstraction.
 """
 
 import time
-from controlhub import control_hub as hub, Motor, Ultrasonic, M1, M2, PORT_MF4P_1
+from controlhub import control_hub as hub, Motor, Ultrasonic, M1, M2, P1
 
 m0 = Motor(M1)
 m1 = Motor(M2)
-dist = Ultrasonic(PORT_MF4P_1)      # HC-SR04 on MF4P_1 (trig/echo)
+dist = Ultrasonic(P1)      # HC-SR04 on P1 (trig/echo)
 
 hub.begin()
 
