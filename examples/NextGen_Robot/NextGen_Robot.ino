@@ -7,6 +7,7 @@ Motor leftMotor (M2, true);    // M1
 Motor rightMotor(M4, false);    // M4
 Motor armMotor  (M1);    // M2
 Servo gripper (S1);    // S1
+Servo phoneServo(S2);    // S2
 Led   led(P3, LED_NUM);    // P3
 
 Gamepad gp;
@@ -19,12 +20,14 @@ void setup() {
     rightMotor.begin();
     armMotor.begin();
     gripper.begin();
+    phoneServo.begin();
     led.begin();
     gp.begin();
 
     Robot.setDriveTrain(&leftMotor, &rightMotor);
 
     gripper.setLimits(70, 120);        // servo angle limits
+    phoneServo.setLimits(0, 180);      // servo angle limits
 
     led.setBrightness(255);
     led.setColor(0, 0, 255);    // blue
@@ -55,6 +58,11 @@ void loop() {
             armMotor.rotate(-50); // lower arm
         } else {
             armMotor.stop(STOP_BRAKE);
+        }
+        if(gp.pressed(GP_R1)) {
+            phoneServo.write(phoneServo.read()+2); // position phone
+        } else if(gp.pressed(GP_R2)) {
+            phoneServo.write(phoneServo.read()-2); // position phone
         }
     }
     delay(20);
