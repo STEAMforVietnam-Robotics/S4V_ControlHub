@@ -27,7 +27,7 @@ void setup() {
     Robot.setDriveTrain(&leftMotor, &rightMotor);
 
     gripper.setLimits(70, 120);        // servo angle limits
-    phoneServo.setLimits(0, 180);      // servo angle limits
+    phoneServo.setLimits(20, 160);      // servo angle limits
 
     led.setBrightness(255);
     led.setColor(0, 0, 255);    // blue
