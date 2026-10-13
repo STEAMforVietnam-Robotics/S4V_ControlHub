@@ -1,9 +1,10 @@
 // ============================================================================
 //  DRV8874.h — Single-motor H-bridge driver driven by PCA9685 PWM channels
 //
-//  The DRV8874 has two inputs IN1/IN2. We use PH/EN-like dual-PWM control:
-//    Forward : IN1 = duty,  IN2 = 0
-//    Reverse : IN1 = 0,     IN2 = duty
+//  The DRV8874 has two inputs IN1/IN2. We use slow-decay dual-PWM control
+//  (short-brake during the PWM off-time):
+//    Forward : IN1 = 1,            IN2 = PWM(1-duty)
+//    Reverse : IN1 = PWM(1-duty),  IN2 = 1
 //    Coast   : IN1 = 0,     IN2 = 0     (both low, high impedance via PWM=0)
 //    Brake   : IN1 = 1,     IN2 = 1     (both high → short-brake)
 // ============================================================================

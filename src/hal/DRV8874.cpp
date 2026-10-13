@@ -32,12 +32,14 @@ void DRV8874::drive(float pct) {
     // Convert magnitude to 12-bit duty (0..4095).
     uint16_t duty = (uint16_t)(fabsf(pct) * 40.95f);
 
+    // Slow decay: one input held high, the other PWMs inverted so the
+    // off-time is short-brake (both high) instead of coast.
     if (pct > 0.0f) {
-        _write(_in1, duty);
-        _write(_in2, 0);
+        _write(_in1, 4095);
+        _write(_in2, 4095 - duty);
     } else if (pct < 0.0f) {
-        _write(_in1, 0);
-        _write(_in2, duty);
+        _write(_in1, 4095 - duty);
+        _write(_in2, 4095);
     } else {
         stop(STOP_COAST);
     }
